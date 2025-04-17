@@ -1,8 +1,4 @@
-################################################################################
-#
-# Load packages required for standard workflows
-#
-################################################################################
+# Load package dependencies ----------------------------------------------------
 
 library(targets)
 library(tarchetypes)
@@ -15,4 +11,5 @@ library(tidyr)
 library(openxlsx)
 library(ggplot2)
 library(quarto)
-
+library(Microsoft365R)
+library(robotoolbox)

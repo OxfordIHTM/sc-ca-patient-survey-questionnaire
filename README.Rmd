@@ -11,12 +11,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-# A template R workflow for general data analysis
+# Seychelles Oncology Unit Patient Survey Questionnaire
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-This repository is a template for a [`docker`](https://www.docker.com/get-started)-containerised, [`{targets}`](https://docs.ropensci.org/targets/)-based, [`{renv}`](https://rstudio.github.io/renv/articles/renv.html)-enabled [`R`](https://cran.r-project.org/) workflow for general data analysis.
+This repository is a template for a [`docker`](https://www.docker.com/get-started)-containerised, [`{targets}`](https://docs.ropensci.org/targets/)-based, [`{renv}`](https://rstudio.github.io/renv/articles/renv.html)-enabled [`R`](https://cran.r-project.org/) workflow for the Seychelles Oncology Unit Patient Survey Questionnaire.
 
 ## About the Project
 
@@ -27,7 +27,7 @@ This repository is a template for a [`docker`](https://www.docker.com/get-starte
 The project repository is structured as follows:
 
 ```
-sc-policy-review
+sc-ca-patient-survey-questionnaire
     |-- .github/
     |-- data/
     |-- data-raw/
@@ -41,7 +41,7 @@ sc-policy-review
     |-- _targets.R
 ```
 
-* `.github` contains project testing and automated deployment of outputs workflows via continuous integration and continuous deployment (CI/CD) using Github Actions.
+* `.github` contains project testing and automated deployment of outputs workflows via continuous integration and continuous deployment (CI/CD) using GitHub Actions.
 
 * `data/` contains intermediate and final data outputs produced by the workflow.
 
