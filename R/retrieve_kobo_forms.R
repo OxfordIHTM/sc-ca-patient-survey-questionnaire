@@ -1,43 +1,4 @@
 #'
-#' Retrieve KoboToolbox forms
-#' 
-#' 
-
-kobo_retrieve_forms <- function(form_id, form_type = c("xls", "xml"),
-                                base_url = Sys.getenv("KOBOTOOLBOX_URL"),
-                                token = Sys.getenv("KOBOTOOLBOX_TOKEN")) {
-  req <- httr2::request(base_url)
-
-  req <- req |>
-    httr2::req_url_path_append(
-      "api/v2/assets", paste0(form_id, ".", form_type)
-    )
-
-  req <- req |>
-    httr2::req_headers(
-      Authorization = paste0("Token ", token)
-    )
-
-  resp <- req |>
-    httr2::req_perform()
-
-  ## Check types ----
-
-
-  auth_handle <- curl::new_handle() |>
-    curl::handle_setheaders(
-      Authorization = paste0("Token ", token)
-    )
-  
-  curl::curl_download(
-    url = req$url,
-    destfile = "forms/onco_patient_survey.xls",
-    handle = auth_handle
-  )
-}
-
-
-#'
 #' Get KoboToolbox form unique identifier by form name
 #'
 #' This function retrieves the UID (unique identifier) of a KoboToolbox form 
@@ -76,3 +37,42 @@ kobo_get_uid <- function(asset_list, form_name) {
   ## Return uid ----
   uid
 }
+
+#'
+#' Retrieve KoboToolbox forms
+#' 
+#' 
+
+kobo_retrieve_forms <- function(form_id, form_type = c("xls", "xml"),
+                                base_url = Sys.getenv("KOBOTOOLBOX_URL"),
+                                token = Sys.getenv("KOBOTOOLBOX_TOKEN")) {
+  req <- httr2::request(base_url)
+
+  req <- req |>
+    httr2::req_url_path_append(
+      "api/v2/assets", paste0(form_id, ".", form_type)
+    )
+
+  req <- req |>
+    httr2::req_headers(Authorization = paste0("Token ", token))
+
+  resp <- req |>
+    httr2::req_perform()
+
+  ## Check types ----
+
+
+  auth_handle <- curl::new_handle() |>
+    curl::handle_setheaders(Authorization = paste0("Token ", token))
+  
+  curl::curl_download(
+    url = req$url,
+    destfile = "forms/onco_patient_survey.xls",
+    handle = auth_handle
+  )
+
+
+}
+
+
+
