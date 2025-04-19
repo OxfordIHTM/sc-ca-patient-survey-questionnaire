@@ -119,23 +119,32 @@ kobo_archive_form_versions <- function(form_version_url,
         `label::English (en)` = unlist(label)[2],
         `label::Creole (cpf)` = unlist(label)[1],
         `hint::English (en)` = unlist(hint)[2],
-        `hint::Creole (cpf)` = unlist(hint)[1],
-        `constraint_message::English (en)` = unlist(constraint_message)[2],
-        `constraint_message::Creole (cpf)` = unlist(constraint_message)[1]
+        `hint::Creole (cpf)` = unlist(hint)[1]
       ) |>
       dplyr::select(
         -`$kuid`, -`$xpath`, -`$autoname`, -select_from_list_name,
-        -label, -hint, -constraint_message
-      ) |>
+        -label, -hint,
+      )
+    
+    if ("constraint_message" %in% names(survey)) {
+      survey <- survey |>
+        dplyr::mutate(
+          `constraint_message::English (en)` = unlist(constraint_message)[2],
+          `constraint_message::Creole (cpf)` = unlist(constraint_message)[1]
+        ) |>
+        dplyr::select(-constraint_message) |>
+        dplyr::relocate(
+          `constraint_message::English (en)`, `constraint_message::Creole (cpf)`,
+          .before = relevant
+        )
+    }
+
+    survey <- survey |>
       dplyr::relocate(type, .before = name) |>
       dplyr::relocate(
         `label::English (en)`, `label::Creole (cpf)`, 
         `hint::English (en)`, `hint::Creole (cpf)`,
         .before = required
-      ) |>
-      dplyr::relocate(
-        `constraint_message::English (en)`, `constraint_message::Creole (cpf)`,
-        .before = relevant
       )
 
     choices <- form_json$content$choices |>

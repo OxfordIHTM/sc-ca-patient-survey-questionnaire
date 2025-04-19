@@ -53,6 +53,7 @@ data_targets <- tar_plan(
 
 ### KoboToolbox forms targets ----
 form_targets <- tar_plan(
+  ## Specify One Drive directories for forms ----
   onedrive_forms_directory = "sc_onco_facility_study/questionnaire/xlsform",
   onedrive_patient_form_file = file.path(
     onedrive_forms_directory, "onco_patient_questionnaire.xlsx"
@@ -61,19 +62,40 @@ form_targets <- tar_plan(
     onedrive_forms_directory, "onco_hcw_questionnaire.xlsx"
   ),
   onedrive_media_form_directory = file.path(onedrive_forms_directory, "media"),
+  
+  ## KoboToolbox forms ----
   kobo_form_list = kobo_asset_list(),
-  kobo_form_id = kobo_get_uid(
+  
+  ### KoboToolbox patient forms ----
+  kobo_patient_form_id = kobo_get_uid(
     asset_list = kobo_form_list, form_name = "Oncology Unit Patient Survey 2025"
   ),
   tar_target(
-    name = kobo_form_version_list,
-    command = robotoolbox::kobo_asset(kobo_form_id) |>
+    name = kobo_patient_form_version_list,
+    command = robotoolbox::kobo_asset(kobo_patient_form_id) |>
       robotoolbox::kobo_asset_version_list(),
     cue = tar_cue("always")
   ),
   tar_target(
-    name = kobo_form_version_urls,
-    command = kobo_get_version_urls(kobo_form_version_list),
+    name = kobo_patient_form_version_urls,
+    command = kobo_get_version_urls(kobo_patient_form_version_list),
+    cue = tar_cue("always")
+  ),
+
+  ### KoboTooblox healthcare worker forms ----
+  kobo_hcw_form_id = kobo_get_uid(
+    asset_list = kobo_form_list, 
+    form_name = "Oncology Unit Patient Survey 2025 - Part B"
+  ),
+  tar_target(
+    name = kobo_hcw_form_version_list,
+    command = robotoolbox::kobo_asset(kobo_hcw_form_id) |>
+      robotoolbox::kobo_asset_version_list(),
+    cue = tar_cue("always")
+  ),
+  tar_target(
+    name = kobo_hcw_form_version_urls,
+    command = kobo_get_version_urls(kobo_hcw_form_version_list),
     cue = tar_cue("always")
   )
 )
@@ -99,13 +121,30 @@ output_targets <- tar_plan(
     command = write_patient_list(patient_list_search),
     format = "file"
   ),
+
+  ## Archive of Kobotoolbox patient form versions ----
   tar_target(
-    name = kobo_form_version_xls,
+    name = kobo_patient_form_version_xls,
     command = kobo_archive_form_versions(
-      kobo_form_version_urls, form_title = "Oncology Unit Patient Survey 2025",
+      kobo_patient_form_version_urls, 
+      form_title = "Oncology Unit Patient Survey 2025",
+      directory = "forms/archive/patient",
       file_name = "onco_patient_questionnaire.xls"
     ),
-    pattern = map(kobo_form_version_urls),
+    pattern = map(kobo_patient_form_version_urls),
+    format = "file"
+  ),
+
+  ## Archive of Kobotoolbox healthcare worker form versions ----
+  tar_target(
+    name = kobo_hcw_form_version_xls,
+    command = kobo_archive_form_versions(
+      kobo_hcw_form_version_urls, 
+      form_title = "Oncology Unit Patient Survey 2025 - Part B",
+      directory = "forms/archive/hcw",
+      file_name = "onco_hcw_questionnaire.xls"
+    ),
+    pattern = map(kobo_hcw_form_version_urls),
     format = "file"
   )
 )
