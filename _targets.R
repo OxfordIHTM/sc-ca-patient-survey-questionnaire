@@ -67,7 +67,14 @@ form_targets <- tar_plan(
   ),
   tar_target(
     name = kobo_form_version_list,
-    command = kobo_asset_version_list(x = kobo_asset(kobo_form_id))
+    command = robotoolbox::kobo_asset(kobo_form_id) |>
+      robotoolbox::kobo_asset_version_list(),
+    cue = tar_cue("always")
+  ),
+  tar_target(
+    name = kobo_form_version_urls,
+    command = kobo_get_version_urls(kobo_form_version_list),
+    cue = tar_cue("always")
   )
 )
 
@@ -90,6 +97,15 @@ output_targets <- tar_plan(
   tar_target(
     name = patient_list_csv,
     command = write_patient_list(patient_list_search),
+    format = "file"
+  ),
+  tar_target(
+    name = kobo_form_version_xls,
+    command = kobo_archive_form_versions(
+      kobo_form_version_urls, form_title = "Oncology Unit Patient Survey 2025",
+      file_name = "onco_patient_questionnaire.xls"
+    ),
+    pattern = map(kobo_form_version_urls),
     format = "file"
   )
 )
