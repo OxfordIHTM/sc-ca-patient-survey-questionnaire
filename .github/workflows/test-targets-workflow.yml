@@ -1,10 +1,10 @@
 name: test targets workflow
 
 on:
-  # push:
-  #   branches: [main, master]
-  # pull_request:
-  #   branches: [main, master]
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
   workflow_dispatch:
 
 jobs:
@@ -12,7 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     container: rocker/tidyverse:4.5.0
     env:
-      GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
+      KOBOTOOLBOX_URL: ${{ secrets.KOBOTOOLBOX_URL }}
+      KOBOTOOLBOX_TOKEN: ${{ secrets.KOBOTOOLBOX_TOKEN }}
+      # GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
     steps:
       - uses: actions/checkout@v4
       
@@ -21,9 +23,9 @@ jobs:
           apt-get update && apt-get install -y --no-install-recommends \
           libxt6 libglpk-dev
           
-      - name: Trust git repo
-        run: |
-          git config --global --add safe.directory /__w/ihtm-targets-template/ihtm-targets-template
+      # - name: Trust git repo
+      #   run: |
+      #     git config --global --add safe.directory /__w/ihtm-targets-template/ihtm-targets-template
           
       - name: Install packages from renv.lock (with cache)
         if: ${{ !env.ACT }}  
@@ -39,7 +41,7 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make()
+          targets::tar_make(kobo_form_version_xls)
         shell: Rscript {0}
         
         

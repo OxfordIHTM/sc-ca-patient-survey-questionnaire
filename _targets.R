@@ -11,7 +11,7 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 set.seed(1977)
 
 ### Connect to One Drive ----
-onedrive <- Microsoft365R::get_business_onedrive()
+#onedrive <- Microsoft365R::get_business_onedrive()
 
 
 ## Create targets and list targets objects ----
@@ -53,9 +53,29 @@ data_targets <- tar_plan(
 
 ### KoboToolbox forms targets ----
 form_targets <- tar_plan(
-  onedrive_patient_form_path = "sc_onco_facility_study/questionnaire/xlsform/onco_patient_questionnaire.xlsx",
-  onedrive_hcw_form_path = "sc_onco_facility_study/questionnaire/xlsform/onco_hcw_questionnaire.xlsx",
-  onedrive_media_form_path = "sc_onco_facility_study/questionnaire/xlsform/media"
+  onedrive_forms_directory = "sc_onco_facility_study/questionnaire/xlsform",
+  onedrive_patient_form_file = file.path(
+    onedrive_forms_directory, "onco_patient_questionnaire.xlsx"
+  ),
+  onedrive_hcw_form_file = file.path(
+    onedrive_forms_directory, "onco_hcw_questionnaire.xlsx"
+  ),
+  onedrive_media_form_directory = file.path(onedrive_forms_directory, "media"),
+  kobo_form_list = kobo_asset_list(),
+  kobo_form_id = kobo_get_uid(
+    asset_list = kobo_form_list, form_name = "Oncology Unit Patient Survey 2025"
+  ),
+  tar_target(
+    name = kobo_form_version_list,
+    command = robotoolbox::kobo_asset(kobo_form_id) |>
+      robotoolbox::kobo_asset_version_list(),
+    cue = tar_cue("always")
+  ),
+  tar_target(
+    name = kobo_form_version_urls,
+    command = kobo_get_version_urls(kobo_form_version_list),
+    cue = tar_cue("always")
+  )
 )
 
 
@@ -77,6 +97,15 @@ output_targets <- tar_plan(
   tar_target(
     name = patient_list_csv,
     command = write_patient_list(patient_list_search),
+    format = "file"
+  ),
+  tar_target(
+    name = kobo_form_version_xls,
+    command = kobo_archive_form_versions(
+      kobo_form_version_urls, form_title = "Oncology Unit Patient Survey 2025",
+      file_name = "onco_patient_questionnaire.xls"
+    ),
+    pattern = map(kobo_form_version_urls),
     format = "file"
   )
 )
