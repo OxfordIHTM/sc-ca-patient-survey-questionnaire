@@ -1,26 +1,117 @@
 #'
-#' Create a github release
+#' Create a new GitHub release gag
 #'
+#' Generates a new release tag for a GitHub repository. If no `repo` is
+#' specified, the repository name is retrieved from a helper function. The tag 
+#' is created based on the current date and the structure of the latest release.
+#'
+#' The tag format is typically: `YYYY.MM.NN` where:
+#' * `YYYY` is the current year;
+#' * `MM` is the current month; and,
+#' * `NN` is a release counter that increments if multiple releases occur in the
+#'   same year and month.
+#'
+#' If no prior releases exist, the tag is initialized using `release_start` as
+#' the start of the release counter `NN`.
+#'
+#' @param repo Character. Optional. The GitHub repository in the format
+#'   `"owner/repo"`. If `NULL`, the repository is retrieved using
+#'   [get_github_repository()].
+#' @param release_start Integer. Used as a seed when generating the release tag,
+#'   if no previous releases exist. Defaults to `1`.
+#'
+#' @returns A character string representing the newly generated release tag.
+#'
+#' @examples
+#' \dontrun{
+#'   github_create_release_tag(release_start = 1)
+#'   github_create_release_tag(repo = "owner/repo", release_start = 1)
+#' }
+#'
+#' @export
+#' 
 
-github_create_release <- function(repo = NULL) {    
-  ## Create tag ----
-  tag <- Sys.Date() |>
-    (\(x)
-      {
-        year_tag <- format(x, "%Y")
-        month_tag <- lubridate::month(x)
-        week_tag  <- lubridate::week(x)
-        tag <- paste(major, month_tag, week_tag, sep = ".")
-        tag
+
+github_create_release_tag <- function(repo = NULL, release_start = 1) {
+  ## Get repo name if repo is NULL ----
+  if (is.null(repo)) repo <- get_github_repository()
+
+  ## Create new release tag ----
+  releases <- gh::gh(file.path("/repos", repo, "releases"))
+
+  if (length(release) == 0) {
+    tag <- lapply(
+      X = c("%Y", "%m"), FUN = function(x) format(Sys.Date(), format = x)
+    ) |>
+      paste(collapse = ".") |>
+      paste(release_start, sep = ".")
+  } else {
+    ## Get current release ----
+    latest_tag_split <- gh::gh(
+      file.path("/repos", repo, "releases/latest")
+    )$tag_name |>
+      stringr::str_split(pattern = "\\.") |>
+      unlist()
+
+    current_year <- format(Sys.Date(), format = "%Y")
+    current_month <- format(Sys.Date(), format = "%m")
+
+    if (latest_tag_split[1] != current_year) {
+      tag <- paste(current_year, current_month, "01", sep = ".")
+    } else {
+      if (latest_tag_split[2] != current_month) {
+        tag <- paste(latest_tag_split[1], current_month, "01", sep = ".")
+      } else {
+        tag <- paste(
+          current_year, current_month,
+          (as.numeric(latest_tag_split[3]) + 1) |>
+            stringr::str_pad(width = 2, side = "left", pad = "0"),
+          sep = "."
+        )
+      }
     }
-    )()
-    
+  }
+
+  ## Return tag ----
+  tag
+}
+
+
+#' 
+#' Create a new GitHub release
+#'
+#' Creates a new GitHub release for a specified repository. If no repository is
+#' provided, it is inferred using the [get_github_repository()] helper. A
+#' release tag is generated using [github_create_release_tag()] and the release
+#' is created via the [piggyback::pb_release_create()] function.
+#'
+#' @param repo Character. Optional. The GitHub repository in the format
+#'   `"owner/repo"`. If `NULL`, the repository is retrieved using 
+#'   [get_github_repository()].
+#' @param release_start Integer. Used as a seed when generating the release tag,
+#'   if no previous releases exist. Defaults to `1`.
+#'
+#' @return A character string representing the created release tag.
+#'
+#' @examples
+#' \dontrun{
+#'   github_create_release()
+#'   github_create_release(repo = "owner/repo")
+#' }
+#'
+#' @export
+#' 
+
+github_create_release <- function(repo = NULL, release_start = 1) {
+  ## Get repo name if repo is NULL ----
+  if (is.null(repo)) repo <- get_github_repository()
   
+  ## Create tag ----
+  tag <- github_create_release_tag(repo = repo, release_start = release_start)
+
   ## Create release ----
-  piggyback::pb_release_create(
-    repo = repo, tag = tag, name = release_name
-  )
-  
+  piggyback::pb_release_create(repo = repo, tag = tag)
+
   ## Return tag ----
   tag
 }
@@ -30,104 +121,16 @@ github_create_release <- function(repo = NULL) {
 #' Create data upload to GitHub
 #'
 
-paglaom_upload_weekly_release <- function(repo = "panukatan/paglaom",
-                                          tag) {
-  zipdir <- tempdir()
-  zip_climate <- file.path(zipdir, "climate.zip")
-  zip_cyclones <- file.path(zipdir, "cyclones.zip")
-  zip_dam <- file.path(zipdir, "dam.zip")
-  zip_heat <- file.path(zipdir, "heat_index.zip")
-  zip_forecasts <- file.path(zipdir, "forecasts.zip")
-  zip_forecasts_agriculture <- file.path(zipdir, "forecasts_agriculture.zip")
-  
-  ## zip climate files ----
-  zip(
-    zip_climate, 
-    files = list.files(
-      path = "data-raw/climate", full.names = TRUE, recursive = TRUE)
-  )
-  
-  ## zip cyclones files ----
-  zip(
-    zip_cyclones, 
-    files = list.files(
-      path = "data-raw/cyclones", full.names = TRUE, recursive = TRUE
-    )
-  )
-  
-  ## zip dam files ----
-  zip(
-    zip_dam, 
-    files = list.files(
-      path = "data-raw/dam", full.names = TRUE, recursive = TRUE
-    )
-  )
-  
-  ## zip heat files ----
-  zip(
-    zip_heat, 
-    files = list.files(
-      path = "data-raw/heat_index", full.names = TRUE, recursive = TRUE
-    )
-  )
-  
-  ## zip forecasts files ----
-  zip(
-    zip_forecasts, 
-    files = list.files(
-      path = "data-raw/forecasts", full.names = TRUE, recursive = TRUE
-    )
-  )
-
-    ## zip agriculture forecasts files ----
-    zip(
-      zip_forecasts_agriculture, 
-      files = list.files(
-        path = "data-raw/forecasts_agriculture", 
-        full.names = TRUE, recursive = TRUE
-      )
-    )
+github_upload_release <- function(repo = NULL, tag) {
+  ## zip media files ----
+  zip("forms/release/media.zip", files = "forms/release/media", flags = "-r -j")
 
   lapply(
-    X = c(
-      zip_climate, zip_cyclones, zip_dam, zip_heat, zip_forecasts, 
-      zip_forecasts_agriculture
-    ),
+    X = list.files("forms/release", full.names = TRUE, pattern = "xlsx|zip"),
     FUN = piggyback::pb_upload,
     tag = tag
   )
+
+  file.remove("forms/release/media.zip")
 }
 
-
-#'
-#' Get filenames of data from current release
-#' 
-#'
-
-get_data_release_filenames <- function(dataset = NULL) {
-  if (is.null(dataset)) {
-    urls <- piggyback::pb_download_url()
-  } else {
-    urls <- piggyback::pb_download_url(file = paste0(dataset, ".zip"))
-  }
-  
-  destfile <- file.path(tempdir(), basename(urls))
-  
-  Map(
-    f = download.file,
-    url = urls, 
-    destfile = destfile, 
-    mode = "wb"
-  )
-  
-  lapply(
-    X = destfile,
-    FUN = unzip,
-    list = TRUE
-  ) |>
-    dplyr::bind_rows() |>
-    dplyr::pull(Name) |>
-    c()
-  
-  unlink(destfile)
-}
