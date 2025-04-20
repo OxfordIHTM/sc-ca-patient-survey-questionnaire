@@ -11,9 +11,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Seychelles Oncology Unit Patient Survey Questionnaire
+# Seychelles Oncology Unit Patient Survey Questionnaire <a href="https://www.health.gov.sc/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Seychelles.svg/1200px-Coat_of_arms_of_Seychelles.svg.png" width="150px" align="right" /></a> <a href="https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm" target="_blank"><img src="https://podcasts.ox.ac.uk/sites/default/files/image-mirror/unpacking-fundamentals-global-health-towards-new-generation-leadership.png" width="150px" align="right" /></a>
 
 <!-- badges: start -->
+[![License for code](https://img.shields.io/badge/license (for code)-GPL3.0-blue.svg)](https://opensource.org/licenses/gpl-3.0.html)
+[![test targets workflow](https://github.com/OxfordIHTM/sc-ca-patient-survey-questionnaire/actions/workflows/test-targets-workflow.yml/badge.svg)](https://github.com/OxfordIHTM/sc-ca-patient-survey-questionnaire/actions/workflows/test-targets-workflow.yml)
 <!-- badges: end -->
 
 This repository is a [`docker`](https://www.docker.com/get-started)-containerised, [`{targets}`](https://docs.ropensci.org/targets/)-based, [`{renv}`](https://rstudio.github.io/renv/articles/renv.html)-enabled [`R`](https://cran.r-project.org/) workflow for the design, development, and deployment of the **Seychelles Oncology Unit Patient Survey Questionnaire** in [KoboToolbox](https://www.kobotoolbox.org/).
@@ -88,12 +90,25 @@ To be able to run this workflow, the following environment variables need to be 
 
 #### GitHub Personal Access Token
 
+A GitHub personal access token (GitHub PAT) is needed to interface with the GitHub API for retrieving information from this project repository. This is used in the GitHub release forms workflow. To create your GitHub PAT, you can follow these [instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) or this [guide](https://oxford-ihtm.io/ihtm-handbook/connecting-git-with-rstudio.html#create-a-github-personal-access-token-pat).
 
+Once you have created your GitHub PAT, store it in your `.Renviron` file as:
+
+```
+GITHUB_PAT=YOUR_GITHUB_PAT_HERE
+```
 
 #### KoboToolbox Token
 
+A KoboToolbox token is needed to interface with the KoboToolbox API for retrieving information from the project's KoboToolbox server. This will require a KoboToolbox account from its [EU server](https://eu.kobotoolbox.org/accounts/signup/) where the project's survey forms are hosted. Once you have a KoboToolbox EU server account and are logged in, you can retrieve your token from [here](https://eu.kobotoolbox.org/#/account/security) or by visiting [here](https://eu.kobotoolbox.org/token/?format=json).
 
+Once you have retrieved your token, you should store it in your `.Renviron` file as:
 
+```
+KOBOTOOLBOX_TOKEN=YOUR_KOBOTOOLBOX_TOKEN_HERE
+```
+
+You will need to restart your R session in order for these new environment variables to be sourced and available.
 
 ### The workflows
 
@@ -128,4 +143,11 @@ This workflow creates a GitHub release of the current deployed patient survey qu
 ```R
 tar_make(dplyr::starts_with("github_release"))
 ```
+
+## Authors
+
+* Dr Johanna Rapanarilala - Oncology Unit, Ministry of Health, Seychelles
+* Dr Sylvie Pool - Ministry of Health, Seychelles and University of Oxford
+* Dr Nyasha Manyeruke - University of Oxford
+* Dr Ernest Guevarra - University of Oxford
 
