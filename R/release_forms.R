@@ -31,7 +31,6 @@
 #' @export
 #' 
 
-
 github_create_release_tag <- function(repo = NULL, release_start = 1) {
   ## Get repo name if repo is NULL ----
   if (is.null(repo)) repo <- get_github_repository()
@@ -39,7 +38,7 @@ github_create_release_tag <- function(repo = NULL, release_start = 1) {
   ## Create new release tag ----
   releases <- gh::gh(file.path("/repos", repo, "releases"))
 
-  if (length(release) == 0) {
+  if (length(releases) == 0) {
     tag <- lapply(
       X = c("%Y", "%m"), FUN = function(x) format(Sys.Date(), format = x)
     ) |>
@@ -125,7 +124,7 @@ github_create_release <- function(repo = NULL,
 #' Create data upload to GitHub
 #'
 
-github_upload_release <- function(forms,
+github_upload_release <- function(files,
                                   media, 
                                   repo = NULL, tag) {
   ## zip media files ----

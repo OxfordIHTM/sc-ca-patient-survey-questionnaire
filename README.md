@@ -1,86 +1,252 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# A template R workflow for general data analysis
+# Seychelles Oncology Unit Patient Survey Questionnaire <a href="https://www.health.gov.sc/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Seychelles.svg/1200px-Coat_of_arms_of_Seychelles.svg.png" width="150px" align="right" /></a> <a href="https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm" target="_blank"><img src="https://podcasts.ox.ac.uk/sites/default/files/image-mirror/unpacking-fundamentals-global-health-towards-new-generation-leadership.png" width="150px" align="right" /></a>
 
 <!-- badges: start -->
 
+[![License for
+code](https://img.shields.io/badge/license%20\(for%20code\)-GPL3.0-blue.svg)](https://opensource.org/licenses/gpl-3.0.html)
+[![test targets
+workflow](https://github.com/OxfordIHTM/sc-ca-patient-survey-questionnaire/actions/workflows/test-targets-workflow.yml/badge.svg)](https://github.com/OxfordIHTM/sc-ca-patient-survey-questionnaire/actions/workflows/test-targets-workflow.yml)
 <!-- badges: end -->
 
-This repository is a template for a
+This repository is a
 [`docker`](https://www.docker.com/get-started)-containerised,
 [`{targets}`](https://docs.ropensci.org/targets/)-based,
 [`{renv}`](https://rstudio.github.io/renv/articles/renv.html)-enabled
-[`R`](https://cran.r-project.org/) workflow for general data analysis.
+[`R`](https://cran.r-project.org/) workflow for the design, development,
+and deployment of the **Seychelles Oncology Unit Patient Survey
+Questionnaire** in [KoboToolbox](https://www.kobotoolbox.org/).
 
 ## About the Project
+
+The research project is entitled *Establishing Quality Indicators for
+Cancer Care: A Readiness Assessment of the Oncology Unit, Ministry of
+Health (MoH) Seychelles*.
+
+This project seeks to assess existing quality of care structures or
+frameworks within the Oncology Unit to serve as a crucial first step in
+understanding the gaps in quality measurement and improvement processes.
+Findings from this research will inform next steps - i.e. the
+development and implementation of actionable standards and quality
+indicators or KPIs that are both relevant and feasible within the
+resource constraints of Seychelles’ health system.
+
+This project also places a renewed focus on capturing patient views and
+experiences to address patient-centred care issues and integrate user
+feedback into future quality improvement initiatives within the Oncology
+Unit.
+
+### Electronic data collection using KoboToolbox
+
+The design and development of the survey questionnaire is described
+[here](https://oxford-ihtm.io/sc-ca-patient-survey-handbook/questionnaire.html).
+This repository contains the code and tools (and their documentation)
+for deploying and implementing an electronic data collection system for
+the survey questionnaire using Kobotoolbox.
+
+KoboToolbox is a free and open-source suite of tools for data
+collection, particularly designed for field data collection in
+challenging environments. It is widely used in humanitarian,
+development, research, and non-profit sectors.
 
 ## Repository Structure
 
 The project repository is structured as follows:
 
-    sc-policy-review
+    sc-ca-patient-survey-questionnaire
         |-- .github/
-        |-- data/
-        |-- data-raw/
-        |-- outputs/
+        |-- forms/
         |-- R/
-        |-- reports
-        |-- renv
-        |-- renv.lock
+        |-- renv/
+        |-- _targets.R
         |-- .Rprofile
         |-- packages.R
-        |-- _targets.R
+        |-- renv.lock
 
   - `.github` contains project testing and automated deployment of
     outputs workflows via continuous integration and continuous
-    deployment (CI/CD) using Github Actions.
+    deployment (CI/CD) using GitHub Actions.
 
-  - `data/` contains intermediate and final data outputs produced by the
-    workflow.
+  - `forms` contains archived and release versions of the survey
+    questionnaire XLSForms and their associated media files.
 
-  - `data-raw/` contains raw datasets, usually either downloaded from
-    source or added manually, that are used in the project.
-
-  - `outputs/` contains compiled reports and figures produced by the
-    workflow.
-
-  - `R/` contains functions developed/created specifically for use in
+  - `R` contains functions developed/created specifically for use in
     this workflow.
 
-  - `reports/` contains literate code for R Markdown and/or Quarto
-    reports rendered in the workflow.
-
-  - `renv/` contains `renv` package specific files and directories used
+  - `renv` contains `{renv}` package specific files and directories used
     by the package for maintaining R package dependencies within the
     project. The directory `renv/library`, is a library that contains
     all packages currently used by the project. This directory, and all
     files and sub-directories within it, are all generated and managed
-    by the `renv` package. Users should not change/edit these manually.
-
-  - `renv.lock` file is the `renv` lockfile which records enough
-    metadata about every package used in this project that it can be
-    re-installed on a new machine. This file is generated by the `renv`
-    package and should not be changed/edited manually.
-
-  - `.Rprofile` file is a project R profile generated when initiating
-    `renv` for the first time. This file is run automatically every time
-    R is run within this project, and `renv` uses it to configure the R
-    session to use the `renv` project library.
-
-  - `packages.R` file lists out all R package dependencies required by
-    the workflow.
+    by the `{renv}` package. Users should not change/edit these
+    manually.
 
   - `_targets.R` file defines the steps in the workflow’s data ingest,
     data processing, data analysis, and reporting pipeline.
 
+  - `.Rprofile` file is a project R profile generated when initiating
+    `{renv}` for the first time. This file is run automatically every
+    time R is run within this project, and `{renv{}` uses it to
+    configure the R session to use the `{renv}` project library.
+
+  - `packages.R` file lists out all R package dependencies required by
+    the workflow.
+
+  - `renv.lock` file is the `{renv}` lockfile which records enough
+    metadata about every package used in this project that it can be
+    re-installed on a new machine. This file is generated by the
+    `{renv}` package and should not be changed/edited manually.
+
 ## Reproducibility
+
+### R version
+
+This project was built using `R 4.5.0`. To manage R versions, it is
+recommended to use the [`rig` software](https://github.com/r-lib/rig) to
+be able to install multiple versions of R and switch between them as
+needed.
 
 ### R package dependencies
 
-This project was built using `R 4.5.0`. This project uses the `renv`
-framework to record R package dependencies and versions. Packages and
-versions used are recorded in `renv.lock` and code used to manage
-dependencies is in `renv/` and other files in the root project
-directory. On starting an R session in the working directory, run
-`renv::restore()` to install R package dependencies.
+This project uses the `{renv}` framework to record R package
+dependencies and versions. Packages and versions used are recorded in
+`renv.lock` and code used to manage dependencies is in the `renv`
+directory and other files in the root project directory.
+
+On starting an R session in the working directory of this repository,
+first run
+
+``` r
+renv::restore()
+```
+
+to install R package dependencies.
+
+### Environment variables
+
+To be able to run this workflow, the following environment variables
+need to be declared beforehand:
+
+#### GitHub Personal Access Token
+
+A GitHub personal access token (GitHub PAT) is needed to interface with
+the GitHub API for retrieving information from this project repository.
+This is used in the GitHub release forms workflow. To create your GitHub
+PAT, you can follow these
+[instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic)
+or this
+[guide](https://oxford-ihtm.io/ihtm-handbook/connecting-git-with-rstudio.html#create-a-github-personal-access-token-pat).
+
+Once you have created your GitHub PAT, store it in your `.Renviron` file
+as:
+
+    GITHUB_PAT=YOUR_GITHUB_PAT_HERE
+
+#### KoboToolbox Token
+
+A KoboToolbox token is needed to interface with the KoboToolbox API for
+retrieving information from the project’s KoboToolbox server. This will
+require a KoboToolbox account from its [EU
+server](https://eu.kobotoolbox.org/accounts/signup/) where the project’s
+survey forms are hosted. Once you have a KoboToolbox EU server account
+and are logged in, you can retrieve your token from
+[here](https://eu.kobotoolbox.org/#/account/security) or by visiting
+[here](https://eu.kobotoolbox.org/token/?format=json).
+
+Once you have retrieved your token, you should store it in your
+`.Renviron` file as:
+
+    KOBOTOOLBOX_TOKEN=YOUR_KOBOTOOLBOX_TOKEN_HERE
+
+You will need to restart your R session in order for these new
+environment variables to be sourced and available.
+
+### The workflows
+
+#### The KoboToolbox archive forms workflow
+
+This workflow archives all deployed versions of the patient survey
+questionnaire on KoboToolbox. The archives are stored in the directory
+path `forms/archive` with each version stored in their own directory
+named with the version number of the deployed form.
+
+Currently, the following forms are available from the archive:
+
+    #>  [1] "forms/archive/hcw/v1/onco_hcw_questionnaire.xls"         
+    #>  [2] "forms/archive/hcw/v10/onco_hcw_questionnaire.xls"        
+    #>  [3] "forms/archive/hcw/v2/onco_hcw_questionnaire.xls"         
+    #>  [4] "forms/archive/hcw/v3/onco_hcw_questionnaire.xls"         
+    #>  [5] "forms/archive/hcw/v4/onco_hcw_questionnaire.xls"         
+    #>  [6] "forms/archive/hcw/v5/onco_hcw_questionnaire.xls"         
+    #>  [7] "forms/archive/hcw/v6/onco_hcw_questionnaire.xls"         
+    #>  [8] "forms/archive/hcw/v7/onco_hcw_questionnaire.xls"         
+    #>  [9] "forms/archive/hcw/v8/onco_hcw_questionnaire.xls"         
+    #> [10] "forms/archive/hcw/v9/onco_hcw_questionnaire.xls"         
+    #> [11] "forms/archive/patient/v1/onco_patient_questionnaire.xls" 
+    #> [12] "forms/archive/patient/v10/onco_patient_questionnaire.xls"
+    #> [13] "forms/archive/patient/v11/onco_patient_questionnaire.xls"
+    #> [14] "forms/archive/patient/v12/onco_patient_questionnaire.xls"
+    #> [15] "forms/archive/patient/v13/onco_patient_questionnaire.xls"
+    #> [16] "forms/archive/patient/v14/onco_patient_questionnaire.xls"
+    #> [17] "forms/archive/patient/v15/onco_patient_questionnaire.xls"
+    #> [18] "forms/archive/patient/v16/onco_patient_questionnaire.xls"
+    #> [19] "forms/archive/patient/v17/onco_patient_questionnaire.xls"
+    #> [20] "forms/archive/patient/v18/onco_patient_questionnaire.xls"
+    #> [21] "forms/archive/patient/v19/onco_patient_questionnaire.xls"
+    #> [22] "forms/archive/patient/v2/onco_patient_questionnaire.xls" 
+    #> [23] "forms/archive/patient/v20/onco_patient_questionnaire.xls"
+    #> [24] "forms/archive/patient/v21/onco_patient_questionnaire.xls"
+    #> [25] "forms/archive/patient/v22/onco_patient_questionnaire.xls"
+    #> [26] "forms/archive/patient/v23/onco_patient_questionnaire.xls"
+    #> [27] "forms/archive/patient/v24/onco_patient_questionnaire.xls"
+    #> [28] "forms/archive/patient/v25/onco_patient_questionnaire.xls"
+    #> [29] "forms/archive/patient/v26/onco_patient_questionnaire.xls"
+    #> [30] "forms/archive/patient/v27/onco_patient_questionnaire.xls"
+    #> [31] "forms/archive/patient/v28/onco_patient_questionnaire.xls"
+    #> [32] "forms/archive/patient/v29/onco_patient_questionnaire.xls"
+    #> [33] "forms/archive/patient/v3/onco_patient_questionnaire.xls" 
+    #> [34] "forms/archive/patient/v30/onco_patient_questionnaire.xls"
+    #> [35] "forms/archive/patient/v4/onco_patient_questionnaire.xls" 
+    #> [36] "forms/archive/patient/v5/onco_patient_questionnaire.xls" 
+    #> [37] "forms/archive/patient/v6/onco_patient_questionnaire.xls" 
+    #> [38] "forms/archive/patient/v7/onco_patient_questionnaire.xls" 
+    #> [39] "forms/archive/patient/v8/onco_patient_questionnaire.xls" 
+    #> [40] "forms/archive/patient/v9/onco_patient_questionnaire.xls"
+
+To run the archive forms workflow, the following command should be run
+in R console:
+
+``` r
+tar_make(dplyr::contains("version_xls"))
+```
+
+#### The KoboToolbox deploy forms workflow
+
+This workflow deploys the current patient survey questionnaire version
+to KoboToolbox. To run the deploy forms workflow, the following command
+should be run in R console:
+
+``` r
+tar_make(dplyr::starts_with("kobo_deploy"))
+```
+
+#### The GitHub release forms workflow
+
+This workflow creates a GitHub release of the current deployed patient
+survey questionnaire version. To run the release forms workflow, the
+following command should be run in R console:
+
+``` r
+tar_make(dplyr::starts_with("github_release"))
+```
+
+## Authors
+
+  - Dr Johanna Rapanarilala - Oncology Unit, Ministry of Health,
+    Seychelles
+  - Dr Sylvie Pool - Ministry of Health, Seychelles and University of
+    Oxford
+  - Dr Nyasha Manyeruke - University of Oxford
+  - Dr Ernest Guevarra - University of Oxford
