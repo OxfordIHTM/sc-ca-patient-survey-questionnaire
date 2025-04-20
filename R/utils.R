@@ -32,3 +32,52 @@ all_targets <- function(env = parent.env(environment()),
   }
   return(out)
 }
+
+
+#'
+#' Get current remote GitHub repository
+#' 
+#' @param full Logical. Should full GitHub remote URL be extracted? Default to
+#'   FALSE.
+#' 
+#' @returns GitHub remote repository.
+#' 
+#' @examples
+#' if (FALSE) get_github_repository()
+#' 
+#' @export
+#' 
+
+get_github_repository <- function(full = FALSE) {
+  ## Check if current directory is a git directory ----
+  git_status <- system("git -C . rev-parse 2>/dev/null; echo $?", intern = TRUE)
+
+  ## Check if git directory ----
+  if (git_status != 0) {
+    cli::cli_abort(
+      c(
+        "Current working directory should be a git repository",
+        "x" = "Current working directory is not a git repository"
+      )
+    )
+  } else {
+    git_repo <- system("git remote -v", intern = TRUE) |>
+      grep(pattern = "push", x = _, value = TRUE) |>
+      gsub(pattern = "origin\t| \\(push\\)", replacement = "", x = _)
+  
+    if (!full) {
+      if (grepl(pattern = "@", x = git_repo)) {
+        git_repo <- gsub(
+          pattern = "git@github.com:|.git", replacement = "", x = git_repo
+        )
+      } else {
+        git_repo <- gsub(
+          pattern = "https://github.com/|.git", replacement = "", x = git_repo
+        )
+      }
+    }
+  }
+
+  ## Return git_repo
+  git_repo
+}
