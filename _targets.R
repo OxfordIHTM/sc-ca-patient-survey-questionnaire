@@ -62,7 +62,33 @@ form_targets <- tar_plan(
     onedrive_forms_directory, "onco_hcw_questionnaire.xlsx"
   ),
   onedrive_media_form_directory = file.path(onedrive_forms_directory, "media"),
-  
+
+  ## Get current forms and media from One Drive ----
+  tar_target(
+    name = kobo_patient_form_current,
+    command = retrieve_kobo_form(
+      onedrive_patient_form_file, 
+      dest_dir = "forms/release"
+    ),
+    format = "file"
+  ),
+  tar_target(
+    name = kobo_hcw_form_current,
+    command = retrieve_kobo_form(
+      onedrive_hcw_form_file, 
+      dest_dir = "forms/release"
+    ),
+    format = "file"
+  ),
+  tar_target(
+    name = kobo_media_form_current,
+    command = retrieve_kobo_media(
+      onedrive_media_form_directory, 
+      dest_dir = "forms/release"
+    ),
+    format = "file"
+  ),
+
   ## KoboToolbox forms ----
   kobo_form_list = kobo_asset_list(),
   

@@ -232,7 +232,7 @@ create_patient_list <- function(ids,
 #' @export
 #' 
 
-write_patient_list <- function(patient_list, directory = "forms/media") {
+write_patient_list <- function(patient_list, directory = "forms/release/media") {
   ## Create directory if needed ----
   if (!dir.exists(directory)) {
     message(
