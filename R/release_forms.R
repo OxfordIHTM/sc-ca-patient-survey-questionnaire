@@ -125,12 +125,14 @@ github_create_release <- function(repo = NULL,
 #' Create data upload to GitHub
 #'
 
-github_upload_release <- function(repo = NULL, tag) {
+github_upload_release <- function(forms,
+                                  media, 
+                                  repo = NULL, tag) {
   ## zip media files ----
-  zip("forms/release/media.zip", files = "forms/release/media", flags = "-r -j")
+  zip("forms/release/media.zip", files = media, flags = "-r -j")
 
   lapply(
-    X = list.files("forms/release", full.names = TRUE, pattern = "xlsx|zip"),
+    X = c(files, "forms/release/media.zip"),
     FUN = piggyback::pb_upload,
     tag = tag
   )

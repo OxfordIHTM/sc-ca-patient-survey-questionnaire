@@ -183,7 +183,10 @@ release_targets <- tar_plan(
   ),
   tar_target(
     name = github_release_upload,
-    command = github_upload_release(tag = github_release_tag)
+    command = github_upload_release(
+      forms = c(kobo_patient_form_current, kobo_hcw_form_current), 
+      media = dirname(kobo_media_form_current) |> unique(),
+      tag = github_release_tag)
   )
 )
 
