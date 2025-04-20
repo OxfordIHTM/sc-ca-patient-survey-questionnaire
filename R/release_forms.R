@@ -88,6 +88,8 @@ github_create_release_tag <- function(repo = NULL, release_start = 1) {
 #' @param repo Character. Optional. The GitHub repository in the format
 #'   `"owner/repo"`. If `NULL`, the repository is retrieved using 
 #'   [get_github_repository()].
+#' @param body Text describing the contents of the tag. Default text is
+#'   "Form release".
 #' @param release_start Integer. Used as a seed when generating the release tag,
 #'   if no previous releases exist. Defaults to `1`.
 #'
@@ -102,7 +104,9 @@ github_create_release_tag <- function(repo = NULL, release_start = 1) {
 #' @export
 #' 
 
-github_create_release <- function(repo = NULL, release_start = 1) {
+github_create_release <- function(repo = NULL,
+                                  body = "Form release",
+                                  release_start = 1) {
   ## Get repo name if repo is NULL ----
   if (is.null(repo)) repo <- get_github_repository()
   
@@ -110,7 +114,7 @@ github_create_release <- function(repo = NULL, release_start = 1) {
   tag <- github_create_release_tag(repo = repo, release_start = release_start)
 
   ## Create release ----
-  piggyback::pb_release_create(repo = repo, tag = tag)
+  piggyback::pb_release_create(repo = repo, tag = tag, body = body)
 
   ## Return tag ----
   tag

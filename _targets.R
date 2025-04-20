@@ -10,10 +10,6 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 ### Set seed ----
 set.seed(1977)
 
-### Connect to One Drive ----
-#onedrive <- Microsoft365R::get_business_onedrive()
-
-
 ## Create targets and list targets objects ----
 
 ### Data targets ----
@@ -175,6 +171,21 @@ output_targets <- tar_plan(
   )
 )
 
+
+### Release targets ----
+release_targets <- tar_plan(
+  tar_target(
+    name = github_release_tag,
+    command = github_create_release(
+      release_start = 30, 
+      body = "Seychelles Oncology Unit Patient Survey Questionnaires"
+    )
+  ),
+  tar_target(
+    name = github_release_upload,
+    command = github_upload_release(tag = github_release_tag)
+  )
+)
 
 ### Reporting targets
 report_targets <- tar_plan(
