@@ -240,9 +240,6 @@ tar_make(dplyr::contains("version_xls"))
 
 #### The KoboToolbox deploy forms workflow
 
-``` mermaid
-```
-
 This workflow deploys the current patient survey questionnaire version
 to KoboToolbox. To run the deploy forms workflow, the following command
 should be run in R console:

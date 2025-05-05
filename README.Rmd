@@ -144,7 +144,7 @@ tar_make(dplyr::contains("version_xls"))
 
 #### The KoboToolbox deploy forms workflow
 
-```{r deploy-workflow, echo = FALSE, eval = TRUE, results = "asis"}
+```{r deploy-workflow, echo = FALSE, eval = FALSE, results = "asis"}
 cat(
   c(
     "```mermaid",
@@ -172,7 +172,7 @@ cat(
   c(
     "```mermaid",
     targets::tar_mermaid(
-      targets_only = TRUE, names = dplyr::contains("github_release_upload"),
+      targets_only = TRUE, names = dplyr::starts_with("github_release_"),
       outdated = FALSE, legend = FALSE, color = FALSE
     ),
     "```"
