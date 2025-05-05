@@ -172,6 +172,22 @@ questionnaire on KoboToolbox. The archives are stored in the directory
 path `forms/archive` with each version stored in their own directory
 named with the version number of the deployed form.
 
+``` mermaid
+graph LR
+  style Graph fill:#FFFFFF00,stroke:#000000;
+  subgraph Graph
+    direction LR
+    xbb5d32e1987ff07f(["kobo_form_list"]):::queued --> x0e210ae8555394e6(["kobo_hcw_form_id"]):::queued
+    x0e210ae8555394e6(["kobo_hcw_form_id"]):::queued --> xb7d8f3583bfefe77(["kobo_hcw_form_version_list"]):::queued
+    xb7d8f3583bfefe77(["kobo_hcw_form_version_list"]):::queued --> x46d71544d67bea92(["kobo_hcw_form_version_urls"]):::queued
+    x46d71544d67bea92(["kobo_hcw_form_version_urls"]):::queued --> xe64e34c5b0210529["kobo_hcw_form_version_xls"]:::queued
+    xbb5d32e1987ff07f(["kobo_form_list"]):::queued --> x21b2e7b6d6ceaa30(["kobo_patient_form_id"]):::queued
+    x21b2e7b6d6ceaa30(["kobo_patient_form_id"]):::queued --> x413b498af0c2bd7a(["kobo_patient_form_version_list"]):::queued
+    x413b498af0c2bd7a(["kobo_patient_form_version_list"]):::queued --> xaac968f3cc974ebc(["kobo_patient_form_version_urls"]):::queued
+    xaac968f3cc974ebc(["kobo_patient_form_version_urls"]):::queued --> xd39ccc444b2bc2a0["kobo_patient_form_version_xls"]:::queued
+  end
+```
+
 Currently, the following forms are available from the archive:
 
     #>  [1] "forms/archive/hcw/v1/onco_hcw_questionnaire.xls"         
@@ -223,6 +239,9 @@ tar_make(dplyr::contains("version_xls"))
 ```
 
 #### The KoboToolbox deploy forms workflow
+
+``` mermaid
+```
 
 This workflow deploys the current patient survey questionnaire version
 to KoboToolbox. To run the deploy forms workflow, the following command

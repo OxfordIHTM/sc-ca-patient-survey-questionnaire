@@ -222,14 +222,3 @@ kobo_archive_form_versions <- function(form_version_url,
   file_path
 }
 
-
-  # auth_handle <- curl::new_handle() |>
-  #   curl::handle_setheaders(Authorization = paste0("Token ", token))
-  
-  # curl::curl_download(
-  #   url = req$url,
-  #   destfile = "forms/onco_patient_survey.xls",
-  #   handle = auth_handle
-  # )
-
-
