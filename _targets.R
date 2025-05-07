@@ -47,7 +47,8 @@ form_targets <- tar_plan(
       onedrive_patient_form_file, 
       dest_dir = "forms/release"
     ),
-    format = "file"
+    format = "file",
+    cue = tar_cue("always")
   ),
   tar_target(
     name = kobo_hcw_form_current,
