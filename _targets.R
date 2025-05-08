@@ -162,7 +162,8 @@ release_targets <- tar_plan(
     command = github_create_release(
       release_start = 30, 
       body = "Seychelles Oncology Unit Patient Survey Questionnaires"
-    )
+    ),
+    cue = tar_cue("always")
   ),
   tar_target(
     name = github_release_upload,
