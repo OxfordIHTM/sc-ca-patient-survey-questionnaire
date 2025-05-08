@@ -14,34 +14,15 @@ set.seed(1977)
 
 ### Data targets ----
 data_targets <- tar_plan(
-  patient_ids = create_patient_id(
-    n = 400, pattern = "numeric", sequential = TRUE, 
-    prefix = format(Sys.Date(), format = "%Y")
+  tar_target(
+    name = patient_list_raw,
+    command = read_patient_list()
   ),
   tar_target(
     name = patient_list,
     command = create_patient_list(
-      ids = patient_ids, language = "Creole (cpf)", 
-      choice_filter = c(
-        rep("nurse01", 50), rep("nurse02", 50), 
-        rep("nurse03", 50), rep("nurse04", 50),
-        rep("nurse05", 50), rep("nurse6", 50), 
-        rep("nurse07", 50), rep("nurse08", 50)
-      ),
-      choice_filter_label = "enumerator"
-    )
-  ),
-  tar_target(
-    name = patient_list_search,
-    command = create_patient_list(
-      ids = patient_ids, language = "Creole (cpf)",
-      choice_filter = c(
-        rep("nurse01", 50), rep("nurse02", 50), 
-        rep("nurse03", 50), rep("nurse04", 50),
-        rep("nurse05", 50), rep("nurse06", 50), 
-        rep("nurse07", 50), rep("nurse08", 50)
-      ),
-      name_key = TRUE,
+      ids = patient_list_raw$id, language = "Creole (cpf)", 
+      choice_filter = patient_list_raw$enumerator_code,
       choice_filter_label = "enumerator"
     )
   )
@@ -66,7 +47,8 @@ form_targets <- tar_plan(
       onedrive_patient_form_file, 
       dest_dir = "forms/release"
     ),
-    format = "file"
+    format = "file",
+    cue = tar_cue("always")
   ),
   tar_target(
     name = kobo_hcw_form_current,
@@ -140,7 +122,7 @@ output_targets <- tar_plan(
   ## CSV file of patient list ----
   tar_target(
     name = patient_list_csv,
-    command = write_patient_list(patient_list_search),
+    command = write_patient_list(patient_list),
     format = "file"
   ),
 

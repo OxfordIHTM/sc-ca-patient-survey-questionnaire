@@ -9,11 +9,22 @@ retrieve_kobo_form <- function(onedrive_form_file,
 
   if (!dir.exists(dest_dir)) dir.create(dest_dir)
 
+  file_name <- basename(onedrive_form_file)
+  file_path <- file.path(dest_dir, file_name)
+
+  temp_dir <- tempdir()
+  temp_file_path <- file.path(temp_dir, file_name)
+
   onedrive$download_file(
     src = onedrive_form_file, 
-    dest = file.path(dest_dir, basename(onedrive_form_file)),
+    #dest = file.path(dest_dir, basename(onedrive_form_file)),
+    dest = temp_file_path,
     overwrite = TRUE
   )
+
+  if (tools::md5sum(temp_file_path) != tools::md5sum(file_path)) {
+    file.copy(from = temp_file_path, to = file_path, overwrite = TRUE)
+  }
 
   file.path(dest_dir, basename(onedrive_form_file))
 }
