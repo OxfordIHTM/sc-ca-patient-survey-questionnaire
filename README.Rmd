@@ -116,12 +116,12 @@ You will need to restart your R session in order for these new environment varia
 
 This workflow archives all deployed versions of the patient survey questionnaire on KoboToolbox. The archives are stored in the directory path `forms/archive` with each version stored in their own directory named with the version number of the deployed form.
 
-```{r archive-workflow, echo = FALSE, eval = TRUE, results = "asis"}
+```{r archive-workflow, echo = FALSE, eval = FALSE, results = "asis"}
 cat(
   c(
     "```mermaid",
     targets::tar_mermaid(
-      targets_only = TRUE, names = dplyr::contains("version_xls"),
+      targets_only = TRUE, names = dplyr::ends_with("version_xls"),
       outdated = FALSE, legend = FALSE, color = FALSE
     ),
     "```"
@@ -172,7 +172,7 @@ cat(
   c(
     "```mermaid",
     targets::tar_mermaid(
-      targets_only = TRUE, names = dplyr::starts_with("github_release_"),
+      targets_only = TRUE, names = dplyr::starts_with("github_release_tag"),
       outdated = FALSE, legend = FALSE, color = FALSE
     ),
     "```"
