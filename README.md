@@ -172,64 +172,55 @@ questionnaire on KoboToolbox. The archives are stored in the directory
 path `forms/archive` with each version stored in their own directory
 named with the version number of the deployed form.
 
-``` mermaid
-graph LR
-  style Graph fill:#FFFFFF00,stroke:#000000;
-  subgraph Graph
-    direction LR
-    xbb5d32e1987ff07f(["kobo_form_list"]):::queued --> x0e210ae8555394e6(["kobo_hcw_form_id"]):::queued
-    x0e210ae8555394e6(["kobo_hcw_form_id"]):::queued --> xb7d8f3583bfefe77(["kobo_hcw_form_version_list"]):::queued
-    xb7d8f3583bfefe77(["kobo_hcw_form_version_list"]):::queued --> x46d71544d67bea92(["kobo_hcw_form_version_urls"]):::queued
-    x46d71544d67bea92(["kobo_hcw_form_version_urls"]):::queued --> xe64e34c5b0210529["kobo_hcw_form_version_xls"]:::queued
-    xbb5d32e1987ff07f(["kobo_form_list"]):::queued --> x21b2e7b6d6ceaa30(["kobo_patient_form_id"]):::queued
-    x21b2e7b6d6ceaa30(["kobo_patient_form_id"]):::queued --> x413b498af0c2bd7a(["kobo_patient_form_version_list"]):::queued
-    x413b498af0c2bd7a(["kobo_patient_form_version_list"]):::queued --> xaac968f3cc974ebc(["kobo_patient_form_version_urls"]):::queued
-    xaac968f3cc974ebc(["kobo_patient_form_version_urls"]):::queued --> xd39ccc444b2bc2a0["kobo_patient_form_version_xls"]:::queued
-  end
-```
-
 Currently, the following forms are available from the archive:
 
     #>  [1] "forms/archive/hcw/v1/onco_hcw_questionnaire.xls"         
     #>  [2] "forms/archive/hcw/v10/onco_hcw_questionnaire.xls"        
-    #>  [3] "forms/archive/hcw/v2/onco_hcw_questionnaire.xls"         
-    #>  [4] "forms/archive/hcw/v3/onco_hcw_questionnaire.xls"         
-    #>  [5] "forms/archive/hcw/v4/onco_hcw_questionnaire.xls"         
-    #>  [6] "forms/archive/hcw/v5/onco_hcw_questionnaire.xls"         
-    #>  [7] "forms/archive/hcw/v6/onco_hcw_questionnaire.xls"         
-    #>  [8] "forms/archive/hcw/v7/onco_hcw_questionnaire.xls"         
-    #>  [9] "forms/archive/hcw/v8/onco_hcw_questionnaire.xls"         
-    #> [10] "forms/archive/hcw/v9/onco_hcw_questionnaire.xls"         
-    #> [11] "forms/archive/patient/v1/onco_patient_questionnaire.xls" 
-    #> [12] "forms/archive/patient/v10/onco_patient_questionnaire.xls"
-    #> [13] "forms/archive/patient/v11/onco_patient_questionnaire.xls"
-    #> [14] "forms/archive/patient/v12/onco_patient_questionnaire.xls"
-    #> [15] "forms/archive/patient/v13/onco_patient_questionnaire.xls"
-    #> [16] "forms/archive/patient/v14/onco_patient_questionnaire.xls"
-    #> [17] "forms/archive/patient/v15/onco_patient_questionnaire.xls"
-    #> [18] "forms/archive/patient/v16/onco_patient_questionnaire.xls"
-    #> [19] "forms/archive/patient/v17/onco_patient_questionnaire.xls"
-    #> [20] "forms/archive/patient/v18/onco_patient_questionnaire.xls"
-    #> [21] "forms/archive/patient/v19/onco_patient_questionnaire.xls"
-    #> [22] "forms/archive/patient/v2/onco_patient_questionnaire.xls" 
-    #> [23] "forms/archive/patient/v20/onco_patient_questionnaire.xls"
-    #> [24] "forms/archive/patient/v21/onco_patient_questionnaire.xls"
-    #> [25] "forms/archive/patient/v22/onco_patient_questionnaire.xls"
-    #> [26] "forms/archive/patient/v23/onco_patient_questionnaire.xls"
-    #> [27] "forms/archive/patient/v24/onco_patient_questionnaire.xls"
-    #> [28] "forms/archive/patient/v25/onco_patient_questionnaire.xls"
-    #> [29] "forms/archive/patient/v26/onco_patient_questionnaire.xls"
-    #> [30] "forms/archive/patient/v27/onco_patient_questionnaire.xls"
-    #> [31] "forms/archive/patient/v28/onco_patient_questionnaire.xls"
-    #> [32] "forms/archive/patient/v29/onco_patient_questionnaire.xls"
-    #> [33] "forms/archive/patient/v3/onco_patient_questionnaire.xls" 
-    #> [34] "forms/archive/patient/v30/onco_patient_questionnaire.xls"
-    #> [35] "forms/archive/patient/v4/onco_patient_questionnaire.xls" 
-    #> [36] "forms/archive/patient/v5/onco_patient_questionnaire.xls" 
-    #> [37] "forms/archive/patient/v6/onco_patient_questionnaire.xls" 
-    #> [38] "forms/archive/patient/v7/onco_patient_questionnaire.xls" 
-    #> [39] "forms/archive/patient/v8/onco_patient_questionnaire.xls" 
-    #> [40] "forms/archive/patient/v9/onco_patient_questionnaire.xls"
+    #>  [3] "forms/archive/hcw/v11/onco_hcw_questionnaire.xls"        
+    #>  [4] "forms/archive/hcw/v12/onco_hcw_questionnaire.xls"        
+    #>  [5] "forms/archive/hcw/v2/onco_hcw_questionnaire.xls"         
+    #>  [6] "forms/archive/hcw/v3/onco_hcw_questionnaire.xls"         
+    #>  [7] "forms/archive/hcw/v4/onco_hcw_questionnaire.xls"         
+    #>  [8] "forms/archive/hcw/v5/onco_hcw_questionnaire.xls"         
+    #>  [9] "forms/archive/hcw/v6/onco_hcw_questionnaire.xls"         
+    #> [10] "forms/archive/hcw/v7/onco_hcw_questionnaire.xls"         
+    #> [11] "forms/archive/hcw/v8/onco_hcw_questionnaire.xls"         
+    #> [12] "forms/archive/hcw/v9/onco_hcw_questionnaire.xls"         
+    #> [13] "forms/archive/patient/v1/onco_patient_questionnaire.xls" 
+    #> [14] "forms/archive/patient/v10/onco_patient_questionnaire.xls"
+    #> [15] "forms/archive/patient/v11/onco_patient_questionnaire.xls"
+    #> [16] "forms/archive/patient/v12/onco_patient_questionnaire.xls"
+    #> [17] "forms/archive/patient/v13/onco_patient_questionnaire.xls"
+    #> [18] "forms/archive/patient/v14/onco_patient_questionnaire.xls"
+    #> [19] "forms/archive/patient/v15/onco_patient_questionnaire.xls"
+    #> [20] "forms/archive/patient/v16/onco_patient_questionnaire.xls"
+    #> [21] "forms/archive/patient/v17/onco_patient_questionnaire.xls"
+    #> [22] "forms/archive/patient/v18/onco_patient_questionnaire.xls"
+    #> [23] "forms/archive/patient/v19/onco_patient_questionnaire.xls"
+    #> [24] "forms/archive/patient/v2/onco_patient_questionnaire.xls" 
+    #> [25] "forms/archive/patient/v20/onco_patient_questionnaire.xls"
+    #> [26] "forms/archive/patient/v21/onco_patient_questionnaire.xls"
+    #> [27] "forms/archive/patient/v22/onco_patient_questionnaire.xls"
+    #> [28] "forms/archive/patient/v23/onco_patient_questionnaire.xls"
+    #> [29] "forms/archive/patient/v24/onco_patient_questionnaire.xls"
+    #> [30] "forms/archive/patient/v25/onco_patient_questionnaire.xls"
+    #> [31] "forms/archive/patient/v26/onco_patient_questionnaire.xls"
+    #> [32] "forms/archive/patient/v27/onco_patient_questionnaire.xls"
+    #> [33] "forms/archive/patient/v28/onco_patient_questionnaire.xls"
+    #> [34] "forms/archive/patient/v29/onco_patient_questionnaire.xls"
+    #> [35] "forms/archive/patient/v3/onco_patient_questionnaire.xls" 
+    #> [36] "forms/archive/patient/v30/onco_patient_questionnaire.xls"
+    #> [37] "forms/archive/patient/v31/onco_patient_questionnaire.xls"
+    #> [38] "forms/archive/patient/v32/onco_patient_questionnaire.xls"
+    #> [39] "forms/archive/patient/v33/onco_patient_questionnaire.xls"
+    #> [40] "forms/archive/patient/v34/onco_patient_questionnaire.xls"
+    #> [41] "forms/archive/patient/v35/onco_patient_questionnaire.xls"
+    #> [42] "forms/archive/patient/v4/onco_patient_questionnaire.xls" 
+    #> [43] "forms/archive/patient/v5/onco_patient_questionnaire.xls" 
+    #> [44] "forms/archive/patient/v6/onco_patient_questionnaire.xls" 
+    #> [45] "forms/archive/patient/v7/onco_patient_questionnaire.xls" 
+    #> [46] "forms/archive/patient/v8/onco_patient_questionnaire.xls" 
+    #> [47] "forms/archive/patient/v9/onco_patient_questionnaire.xls"
 
 To run the archive forms workflow, the following command should be run
 in R console:
