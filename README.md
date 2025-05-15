@@ -215,12 +215,15 @@ Currently, the following forms are available from the archive:
     #> [39] "forms/archive/patient/v33/onco_patient_questionnaire.xls"
     #> [40] "forms/archive/patient/v34/onco_patient_questionnaire.xls"
     #> [41] "forms/archive/patient/v35/onco_patient_questionnaire.xls"
-    #> [42] "forms/archive/patient/v4/onco_patient_questionnaire.xls" 
-    #> [43] "forms/archive/patient/v5/onco_patient_questionnaire.xls" 
-    #> [44] "forms/archive/patient/v6/onco_patient_questionnaire.xls" 
-    #> [45] "forms/archive/patient/v7/onco_patient_questionnaire.xls" 
-    #> [46] "forms/archive/patient/v8/onco_patient_questionnaire.xls" 
-    #> [47] "forms/archive/patient/v9/onco_patient_questionnaire.xls"
+    #> [42] "forms/archive/patient/v36/onco_patient_questionnaire.xls"
+    #> [43] "forms/archive/patient/v37/onco_patient_questionnaire.xls"
+    #> [44] "forms/archive/patient/v38/onco_patient_questionnaire.xls"
+    #> [45] "forms/archive/patient/v4/onco_patient_questionnaire.xls" 
+    #> [46] "forms/archive/patient/v5/onco_patient_questionnaire.xls" 
+    #> [47] "forms/archive/patient/v6/onco_patient_questionnaire.xls" 
+    #> [48] "forms/archive/patient/v7/onco_patient_questionnaire.xls" 
+    #> [49] "forms/archive/patient/v8/onco_patient_questionnaire.xls" 
+    #> [50] "forms/archive/patient/v9/onco_patient_questionnaire.xls"
 
 To run the archive forms workflow, the following command should be run
 in R console:
