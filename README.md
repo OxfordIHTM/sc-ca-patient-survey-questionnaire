@@ -218,12 +218,13 @@ Currently, the following forms are available from the archive:
     #> [42] "forms/archive/patient/v36/onco_patient_questionnaire.xls"
     #> [43] "forms/archive/patient/v37/onco_patient_questionnaire.xls"
     #> [44] "forms/archive/patient/v38/onco_patient_questionnaire.xls"
-    #> [45] "forms/archive/patient/v4/onco_patient_questionnaire.xls" 
-    #> [46] "forms/archive/patient/v5/onco_patient_questionnaire.xls" 
-    #> [47] "forms/archive/patient/v6/onco_patient_questionnaire.xls" 
-    #> [48] "forms/archive/patient/v7/onco_patient_questionnaire.xls" 
-    #> [49] "forms/archive/patient/v8/onco_patient_questionnaire.xls" 
-    #> [50] "forms/archive/patient/v9/onco_patient_questionnaire.xls"
+    #> [45] "forms/archive/patient/v39/onco_patient_questionnaire.xls"
+    #> [46] "forms/archive/patient/v4/onco_patient_questionnaire.xls" 
+    #> [47] "forms/archive/patient/v5/onco_patient_questionnaire.xls" 
+    #> [48] "forms/archive/patient/v6/onco_patient_questionnaire.xls" 
+    #> [49] "forms/archive/patient/v7/onco_patient_questionnaire.xls" 
+    #> [50] "forms/archive/patient/v8/onco_patient_questionnaire.xls" 
+    #> [51] "forms/archive/patient/v9/onco_patient_questionnaire.xls"
 
 To run the archive forms workflow, the following command should be run
 in R console:
